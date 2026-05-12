@@ -1,0 +1,34 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.sonarqube/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Angular
+node_modules/
+dist/
+.angular/
+.DS_Store
+auth.json
+
+# Environment
+.env
+.env.*
+!.env.example
+appsettings.json
+appsettings.Development.json
+**/appsettings.json
+**/appsettings.Development.json
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
