@@ -55,7 +55,8 @@ builder.Services
     })
     .AddCookie(options =>
     {
-        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     })
     .AddJwtBearer(options =>
     {
@@ -76,32 +77,16 @@ builder.Services
         options.ClientSecret = builder.Configuration["OAuth:GitHub:ClientSecret"]!;
         options.Scope.Add("user:email");
         options.CallbackPath = "/api/auth/callback/github";
-        options.CorrelationCookie.SameSite = SameSiteMode.Lax;
-        options.Events.OnRedirectToAuthorizationEndpoint = context =>
-        {
-            var uriBuilder = new UriBuilder(context.RedirectUri);
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["redirect_uri"] = "https://hireconnect-gateway.onrender.com/api/auth/callback/github";
-            uriBuilder.Query = query.ToString();
-            context.Response.Redirect(uriBuilder.ToString());
-            return Task.CompletedTask;
-        };
+        options.CorrelationCookie.SameSite = SameSiteMode.None;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
     })
     .AddGoogle(options =>
     {
         options.ClientId     = builder.Configuration["OAuth:Google:ClientId"]!;
         options.ClientSecret = builder.Configuration["OAuth:Google:ClientSecret"]!;
         options.CallbackPath = "/api/auth/callback/google";
-        options.CorrelationCookie.SameSite = SameSiteMode.Lax;
-        options.Events.OnRedirectToAuthorizationEndpoint = context =>
-        {
-            var uriBuilder = new UriBuilder(context.RedirectUri);
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["redirect_uri"] = "https://hireconnect-gateway.onrender.com/api/auth/callback/google";
-            uriBuilder.Query = query.ToString();
-            context.Response.Redirect(uriBuilder.ToString());
-            return Task.CompletedTask;
-        };
+        options.CorrelationCookie.SameSite = SameSiteMode.None;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
     });
 
 builder.Services.AddAuthorization();
