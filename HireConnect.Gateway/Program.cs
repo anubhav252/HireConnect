@@ -1,4 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("yarp.json", optional: false, reloadOnChange: true);
 
 // Add YARP Reverse Proxy
 builder.Services.AddReverseProxy()

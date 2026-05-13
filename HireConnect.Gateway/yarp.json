@@ -1,0 +1,106 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "authRoute": {
+        "ClusterId": "authCluster",
+        "Match": {
+          "Path": "/api/auth/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/auth" }
+        ]
+      },
+      "jobRoute": {
+        "ClusterId": "jobCluster",
+        "Match": {
+          "Path": "/api/jobs/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/jobs" }
+        ]
+      },
+      "profileRoute": {
+        "ClusterId": "profileCluster",
+        "Match": {
+          "Path": "/api/profiles/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/profiles" }
+        ]
+      },
+      "applicationRoute": {
+        "ClusterId": "applicationCluster",
+        "Match": {
+          "Path": "/api/applications/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/applications" }
+        ]
+      },
+      "interviewRoute": {
+        "ClusterId": "interviewCluster",
+        "Match": {
+          "Path": "/api/interviews/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/interviews" }
+        ]
+      },
+      "notificationRoute": {
+        "ClusterId": "notificationCluster",
+        "Match": {
+          "Path": "/api/notifications/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/notifications" }
+        ]
+      },
+      "analyticsRoute": {
+        "ClusterId": "analyticsCluster",
+        "Match": {
+          "Path": "/api/analytics/{**remainder}"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/api/analytics" }
+        ]
+      }
+    },
+    "Clusters": {
+      "authCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5001" }
+        }
+      },
+      "jobCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5003" }
+        }
+      },
+      "profileCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5002" }
+        }
+      },
+      "applicationCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5004" }
+        }
+      },
+      "interviewCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5005" }
+        }
+      },
+      "notificationCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5006" }
+        }
+      },
+      "analyticsCluster": {
+        "Destinations": {
+          "dest1": { "Address": "http://localhost:5008" }
+        }
+      }
+    }
+  }
+}
