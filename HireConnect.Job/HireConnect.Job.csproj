@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>HireConnect.Job</RootNamespace>
+    <AssemblyName>HireConnect.Job</AssemblyName>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Npgsql" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HireConnect.Shared\HireConnect.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

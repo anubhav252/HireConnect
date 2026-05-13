@@ -1,0 +1,149 @@
+{
+  "info": {
+    "name": "HireConnect — Job Service API",
+    "description": "Complete Postman collection for the HireConnect Job-Service.\nBase URL: http://localhost:5002\n\nSet the {{token}} variable to your JWT from Auth-Service login.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5002" },
+    { "key": "token", "value": "YOUR_JWT_TOKEN_HERE" }
+  ],
+  "item": [
+    {
+      "name": "1. Create Job (Recruiter only)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/jobs",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Senior .NET Developer\",\n  \"category\": \"Software Engineering\",\n  \"type\": \"Full-Time\",\n  \"location\": \"Bengaluru, Karnataka\",\n  \"salaryMin\": 1200000,\n  \"salaryMax\": 2000000,\n  \"skills\": [\"C#\", \"ASP.NET Core\", \"Entity Framework\", \"PostgreSQL\", \"Docker\"],\n  \"experienceRequired\": 4,\n  \"status\": \"Active\",\n  \"description\": \"We are looking for a Senior .NET Developer to join our growing engineering team. You will design and implement high-performance microservices using ASP.NET Core 8.\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Get All Jobs",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/jobs",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "3. Get Job by ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/jobs/1",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "4. Search Jobs — keyword only",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/jobs/search?keyword=dotnet developer",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "jobs", "search"],
+          "query": [{ "key": "keyword", "value": "dotnet developer" }]
+        },
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "5. Search Jobs — with salary + category + location filters",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/jobs/search?keyword=developer&minSalary=1000000&maxSalary=2500000&category=Software Engineering&location=Bengaluru&experienceRequired=5&page=1&pageSize=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "jobs", "search"],
+          "query": [
+            { "key": "keyword", "value": "developer" },
+            { "key": "minSalary", "value": "1000000" },
+            { "key": "maxSalary", "value": "2500000" },
+            { "key": "category", "value": "Software Engineering" },
+            { "key": "location", "value": "Bengaluru" },
+            { "key": "experienceRequired", "value": "5" },
+            { "key": "page", "value": "1" },
+            { "key": "pageSize", "value": "10" }
+          ]
+        },
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Jobs by Category",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/jobs/category/Software Engineering",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "7. Get Jobs by Location",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/jobs/location/Bengaluru",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "8. Get Jobs by Recruiter ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/jobs/recruiter/42",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "9. Update Job (Recruiter only — must own the job)",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/api/jobs/1",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Lead .NET Developer\",\n  \"category\": \"Software Engineering\",\n  \"type\": \"Full-Time\",\n  \"location\": \"Bengaluru, Karnataka\",\n  \"salaryMin\": 1500000,\n  \"salaryMax\": 2500000,\n  \"skills\": [\"C#\", \"ASP.NET Core 8\", \"Microservices\", \"Kubernetes\", \"PostgreSQL\"],\n  \"experienceRequired\": 6,\n  \"status\": \"Active\",\n  \"description\": \"Lead and mentor a team of .NET engineers while architecting scalable microservices on Azure.\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Delete Job (Recruiter only — must own the job)",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/jobs/1",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ]
+      },
+      "response": []
+    },
+    {
+      "name": "11. Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

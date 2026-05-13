@@ -1,0 +1,6 @@
+@HireConnect.Notification_HostAddress = http://localhost:5192
+
+GET {{HireConnect.Notification_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

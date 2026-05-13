@@ -1,0 +1,278 @@
+{
+    "info": {
+        "name": "HireConnect Core API Testing",
+        "description": "Full collection for testing Auth, Profiles, Jobs, Applications, and Interviews.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "01. Auth",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"fullName\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"Password123!\",\n    \"role\": \"Recruiter\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"Password123!\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "02. Profiles",
+            "item": [
+                {
+                    "name": "Get Candidate Profile (By User ID)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/candidates/user/4",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "candidates",
+                                "user",
+                                "4"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Recruiter Profile (By User ID)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/recruiters/user/3",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "recruiters",
+                                "user",
+                                "3"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update My Profile (Recruiter)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"companyName\": \"Updated Tech Corp\",\n    \"bio\": \"Senior Talent Acquisition\",\n    \"location\": \"California\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/recruiters/me",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "recruiters",
+                                "me"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "03. Jobs",
+            "item": [
+                {
+                    "name": "Search Jobs (Keyword/Salary)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/jobs/search?keyword=Developer&minSalary=50000",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "jobs",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "keyword",
+                                    "value": "Developer"
+                                },
+                                {
+                                    "key": "minSalary",
+                                    "value": "50000"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Jobs by Recruiter",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/jobs/recruiter/3",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "jobs",
+                                "recruiter",
+                                "3"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "04. Applications",
+            "item": [
+                {
+                    "name": "Get Applications for a Job (Recruiter View)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/applications/job/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "job",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Applications (Candidate View)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/applications/candidate/4",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "candidate",
+                                "4"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Withdraw Application",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{base_url}}/applications/1/withdraw",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "applications",
+                                "1",
+                                "withdraw"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "05. Interviews",
+            "item": [
+                {
+                    "name": "Get Interview by Application ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/interviews/application/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "interviews",
+                                "application",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:5000/api",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "PASTE_TOKEN_HERE",
+            "type": "string"
+        }
+    ]
+}

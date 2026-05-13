@@ -1,0 +1,201 @@
+version: "3.9"
+
+services:
+
+  # ── Infrastructure ──────────────────────────────────────────────────────────
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: hireconnect-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hireconnect
+
+  elasticsearch:
+    image: elasticsearch:8.13.4
+    container_name: hireconnect-elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - hireconnect
+
+  redis:
+    image: redis:7-alpine
+    container_name: hireconnect-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - hireconnect
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: hireconnect-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: hireconnect
+      RABBITMQ_DEFAULT_PASS: hireconnect
+    networks:
+      - hireconnect
+
+  # ── Microservices ───────────────────────────────────────────────────────────
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Auth/Dockerfile
+    container_name: hireconnect-auth
+    restart: unless-stopped
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectAuthDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    depends_on:
+      - postgres
+    networks:
+      - hireconnect
+
+  profile-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Profile/Dockerfile
+    container_name: hireconnect-profile
+    restart: unless-stopped
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectProfileDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    depends_on:
+      - postgres
+    networks:
+      - hireconnect
+
+  job-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Job/Dockerfile
+    container_name: hireconnect-job
+    restart: unless-stopped
+    ports:
+      - "5003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectJobDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+      - Elasticsearch__Uri=http://elasticsearch:9200
+    depends_on:
+      - postgres
+      - elasticsearch
+    networks:
+      - hireconnect
+
+  application-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Application/Dockerfile
+    container_name: hireconnect-application
+    restart: unless-stopped
+    ports:
+      - "5004:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectApplicationDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    depends_on:
+      - postgres
+    networks:
+      - hireconnect
+
+  interview-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Interview/Dockerfile
+    container_name: hireconnect-interview
+    restart: unless-stopped
+    ports:
+      - "5005:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectInterviewDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    depends_on:
+      - postgres
+    networks:
+      - hireconnect
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Notification/Dockerfile
+    container_name: hireconnect-notification
+    restart: unless-stopped
+    ports:
+      - "5006:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=HireConnectNotificationDB;Username=postgres;Password=postgres
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - hireconnect
+
+
+
+  analytics-service:
+    build:
+      context: .
+      dockerfile: HireConnect.Analytics/Dockerfile
+    container_name: hireconnect-analytics
+    restart: unless-stopped
+    ports:
+      - "5008:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Jwt__Key=wertyuikjhgfdsasdfghjkjhcvkysdjdfjdfghcvbhhhj
+      - Jwt__Issuer=HireConnect
+      - Jwt__Audience=HireConnect.Users
+    networks:
+      - hireconnect
+
+volumes:
+  postgres_data:
+  es_data:
+
+networks:
+  hireconnect:
+    driver: bridge
