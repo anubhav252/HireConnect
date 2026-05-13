@@ -1,104 +1,117 @@
 {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Yarp": "Information"
+    }
+  },
+  "AllowedHosts": "*",
   "ReverseProxy": {
     "Routes": {
-      "authRoute": {
-        "ClusterId": "authCluster",
+      "auth-route": {
+        "ClusterId": "auth-cluster",
         "Match": {
           "Path": "/api/auth/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/auth" }
-        ]
+        }
       },
-      "jobRoute": {
-        "ClusterId": "jobCluster",
-        "Match": {
-          "Path": "/api/jobs/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/jobs" }
-        ]
-      },
-      "profileRoute": {
-        "ClusterId": "profileCluster",
+      "profile-route": {
+        "ClusterId": "profile-cluster",
         "Match": {
           "Path": "/api/profiles/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/profiles" }
-        ]
+        }
       },
-      "applicationRoute": {
-        "ClusterId": "applicationCluster",
+      "candidate-route": {
+        "ClusterId": "profile-cluster",
         "Match": {
-          "Path": "/api/applications/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/applications" }
-        ]
+          "Path": "/api/candidates/{**remainder}"
+        }
       },
-      "interviewRoute": {
-        "ClusterId": "interviewCluster",
+      "recruiter-route": {
+        "ClusterId": "profile-cluster",
         "Match": {
-          "Path": "/api/interviews/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/interviews" }
-        ]
+          "Path": "/api/recruiters/{**remainder}"
+        }
       },
-      "notificationRoute": {
-        "ClusterId": "notificationCluster",
+      "job-route": {
+        "ClusterId": "job-cluster",
+        "Match": {
+          "Path": "/api/jobs/{**remainder}"
+        }
+      },
+      "notification-route": {
+        "ClusterId": "notification-cluster",
         "Match": {
           "Path": "/api/notifications/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/notifications" }
-        ]
+        }
       },
-      "analyticsRoute": {
-        "ClusterId": "analyticsCluster",
+      "application-route": {
+        "ClusterId": "application-cluster",
+        "Match": {
+          "Path": "/api/applications/{**remainder}"
+        }
+      },
+      "interview-route": {
+        "ClusterId": "interview-cluster",
+        "Match": {
+          "Path": "/api/interviews/{**remainder}"
+        }
+      },
+      "analytics-route": {
+        "ClusterId": "analytics-cluster",
         "Match": {
           "Path": "/api/analytics/{**remainder}"
-        },
-        "Transforms": [
-          { "PathRemovePrefix": "/api/analytics" }
-        ]
+        }
       }
     },
     "Clusters": {
-      "authCluster": {
+      "auth-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5001" }
+          "destination1": {
+            "Address": "http://localhost:5284"
+          }
         }
       },
-      "jobCluster": {
+      "profile-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5003" }
+          "destination1": {
+            "Address": "http://localhost:5001"
+          }
         }
       },
-      "profileCluster": {
+      "job-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5002" }
+          "destination1": {
+            "Address": "http://localhost:5003"
+          }
         }
       },
-      "applicationCluster": {
+      "notification-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5004" }
+          "destination1": {
+            "Address": "http://localhost:5192"
+          }
         }
       },
-      "interviewCluster": {
+      "application-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5005" }
+          "destination1": {
+            "Address": "http://localhost:5067"
+          }
         }
       },
-      "notificationCluster": {
+      "interview-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5006" }
+          "destination1": {
+            "Address": "http://localhost:5238"
+          }
         }
       },
-      "analyticsCluster": {
+      "analytics-cluster": {
         "Destinations": {
-          "dest1": { "Address": "http://localhost:5008" }
+          "destination1": {
+            "Address": "http://localhost:5069"
+          }
         }
       }
     }
