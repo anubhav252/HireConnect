@@ -134,7 +134,7 @@ public class AuthController : ControllerBase
             new OAuthUserInfo(email, name, "GitHub"), role);
 
         // Redirect back to Angular frontend with token
-        var frontendUrl = $"http://localhost:4200/auth/callback?token={response.Token}&userId={response.UserId}&email={response.Email}&role={response.Role}";
+        var frontendUrl = $"https://hireconnect-frontend-rc62.onrender.com/auth/callback?token={response.Token}&userId={response.UserId}&email={response.Email}&role={response.Role}";
         return Redirect(frontendUrl);
     }
 
@@ -166,7 +166,7 @@ public class AuthController : ControllerBase
             new OAuthUserInfo(email, name, "Google"), role);
 
         // Redirect back to Angular frontend with token
-        var frontendUrl = $"http://localhost:4200/auth/callback?token={response.Token}&userId={response.UserId}&email={response.Email}&role={response.Role}";
+        var frontendUrl = $"https://hireconnect-frontend-rc62.onrender.com/auth/callback?token={response.Token}&userId={response.UserId}&email={response.Email}&role={response.Role}";
         return Redirect(frontendUrl);
     }
 }

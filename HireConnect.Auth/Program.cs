@@ -81,7 +81,7 @@ builder.Services
         {
             var uriBuilder = new UriBuilder(context.RedirectUri);
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["redirect_uri"] = "http://localhost:5000/api/auth/callback/github";
+            query["redirect_uri"] = "https://hireconnect-gateway.onrender.com/api/auth/callback/github";
             uriBuilder.Query = query.ToString();
             context.Response.Redirect(uriBuilder.ToString());
             return Task.CompletedTask;
@@ -97,7 +97,7 @@ builder.Services
         {
             var uriBuilder = new UriBuilder(context.RedirectUri);
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["redirect_uri"] = "http://localhost:5000/api/auth/callback/google";
+            query["redirect_uri"] = "https://hireconnect-gateway.onrender.com/api/auth/callback/google";
             uriBuilder.Query = query.ToString();
             context.Response.Redirect(uriBuilder.ToString());
             return Task.CompletedTask;
