@@ -15,6 +15,7 @@ export const routes: Routes = [
   ]},
   { path: 'recruiter', children: [
     { path: 'dashboard', canActivate: [authGuard, roleGuard], data: { role: 'Recruiter' }, loadComponent: () => import('./features/recruiter/dashboard/dashboard.component').then(m => m.RecruiterDashboardComponent) },
+    { path: 'profile', canActivate: [authGuard, roleGuard], data: { role: 'Recruiter' }, loadComponent: () => import('./features/recruiter/profile/profile.component').then(m => m.RecruiterProfileComponent) },
     { path: 'post-job', canActivate: [authGuard, roleGuard], data: { role: 'Recruiter' }, loadComponent: () => import('./features/recruiter/post-job/post-job.component').then(m => m.PostJobComponent) },
     { path: 'edit-job/:id', canActivate: [authGuard, roleGuard], data: { role: 'Recruiter' }, loadComponent: () => import('./features/recruiter/post-job/post-job.component').then(m => m.PostJobComponent) },
     { path: 'jobs/:id/applications', canActivate: [authGuard, roleGuard], data: { role: 'Recruiter' }, loadComponent: () => import('./features/recruiter/manage-applications/manage-applications.component').then(m => m.ManageApplicationsComponent) }
