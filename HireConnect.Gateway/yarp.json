@@ -13,10 +13,16 @@
           "Path": "/api/jobs/{**remainder}"
         }
       },
-      "ProfileRoute": {
+      "CandidateRoute": {
         "ClusterId": "ProfileCluster",
         "Match": {
-          "Path": "/api/profiles/{**remainder}"
+          "Path": "/api/candidates/{**remainder}"
+        }
+      },
+      "RecruiterRoute": {
+        "ClusterId": "ProfileCluster",
+        "Match": {
+          "Path": "/api/recruiters/{**remainder}"
         }
       },
       "NotificationRoute": {
