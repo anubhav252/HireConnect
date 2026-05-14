@@ -25,6 +25,7 @@ import { Notification } from '../../../core/models/notification.models';
           } @else if (authService.isRecruiter()) {
             <a routerLink="/recruiter/dashboard" routerLinkActive="active">Dashboard</a>
             <a routerLink="/recruiter/post-job" routerLinkActive="active">Post Job</a>
+            <a routerLink="/recruiter/profile" routerLinkActive="active">Profile</a>
           }
         }
       </nav>
